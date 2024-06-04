@@ -105,7 +105,7 @@ for i, item in enumerate(menu):
 while True:
     EscolhaEX = int(input('\nEscolha o número correspondente ao produto para apagá-lo: '))
     if EscolhaEX in listaEscolhida:
-        print(f'\nFoi apagado o item ({menu[EscolhaEX]['nome']}) com preço (R${menu[EscolhaEX]['pr']}0)')
+        print(f'\nFoi apagado o item ({menu[EscolhaEX]["nome"]}) com preço (R${menu[EscolhaEX]["pr"]}0)')
         del menu[EscolhaEX]
         break
     else:
@@ -115,4 +115,4 @@ print(f'\nCardápio Atualizado!')
 print(47 * '-')
 
 for index in menu:
-    print(f'|{index['nome']} R${index['pr']}0')
+    print(f'|{index["nome"]} R${index["pr"]}0')
