@@ -19,4 +19,4 @@ if itens in produtoscafeteria:
     print(produtoscafeteria)
 
 else:
-    print(f"A informaçao '{itens}' nao exite no catálogo.")
+    print(f"A informaçao '{itens}' nao existe no catálogo.")
