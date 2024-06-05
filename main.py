@@ -10,6 +10,21 @@ with open("./cardapio.txt", "r") as arquivo:
     conteudoArquivo = arquivo.read()
     cardapio = json.loads(conteudoArquivo)
 ################################################
+def buscar ():
+    print("-----------------------------------------------------------")
+    esc = str(input("Digite o nome do produto: "))
+    var_escolha = False
+    for item in cardapio:
+        if item["nome"] == esc.title():
+            var_escolha = True
+            print("Nome do produto: ",item["nome"])
+            print("Custo do produto : R$",item["pr"])
+            print("Categoria: ", item["categoria"])
+            print("Sub Categoria: ", item["sub_categoria"])
+    if var_escolha == False:
+        print("Produto nao encontrado")
+    print("-----------------------------------------------------------")
+
 
 
 def adicionarItem():
@@ -136,6 +151,7 @@ while True:
         break
 
     if escolha == 3:
+        buscar()
         break
 
     if escolha == 4:
