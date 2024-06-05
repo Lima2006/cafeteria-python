@@ -1,24 +1,20 @@
 print("-----------------------------------------")
-produtoscafeteria = {
-    "nome": "cappuccino",
-    "pr": 7,
-    "categoria": "bebidas",
-    "sub-categoria": "bebida quente"
-}
+with open("./cardapio.txt", "w") as arquivo:
+    arquivo.write(json.dumps(cardapio))
 
-print("produtos:")
-print(produtoscafeteria)
+print("Cardápio completo:")
+print(cardapio)
 
-itens = input("Qual a informaçao que deseja alterar: ")
+itens = input("Qual a informaçao do cardápio que deseja alterar: ")
 
-if itens in produtoscafeteria:
-    novo_valor = input(f"Informe o novo valor para o produto: '{itens}': ")
-    produtoscafeteria[itens] = novo_valor
+if itens in cardapio:
+    novo_valor = input(f"Informe a nova informaçao para o produto: '{itens}': ")
+    cardapio[itens] = novo_valor
 
-    print("\nInformaçoes atualizadas:")
+    print("\nCardápio atualizado:")
 
-    print(produtoscafeteria)
+    print(cardapio)
 
 else:
-    print(f"A informaçao '{itens}' nao existe no catálogo.")
+    print(f"A informaçao '{itens}' nao existe no cardápio.")
 print("-----------------------------------------")
