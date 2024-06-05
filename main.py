@@ -70,7 +70,49 @@ def listar_produtos():
         else:
             print("Escolha uma opção válida")
     print("-------------------------------------------------------------------------")
+def excluir():
+        print('\n1 - Bebidas \n2 - Entradas \n3 - Pratos Principais \n4 - Sobremesas')
 
+        while True:
+            Escolha = int(input('\nEscolha um número para selecionar a categoria do item a ser apagado: '))
+            if Escolha == 1:
+                Escolha = "bebidas"
+                break
+            elif Escolha == 2:
+                Escolha = "entrada"
+                break
+            elif Escolha == 3:
+                Escolha = "pratos principais"
+                break
+            elif Escolha == 4:
+                Escolha = "sobremesas"
+                break
+            else:
+                print('\nNúmero inválido, digite um válido!')
+
+        listaEscolhida = []
+        print("Cardápio")
+        print(47 * '-')
+        for i, item in enumerate(cardapio):
+            if Escolha in item.values():
+                print(f'|{i} - {item["nome"]} R${item["pr"]:.2f}')
+                listaEscolhida.append(i)
+
+
+        while True:
+            EscolhaEX = int(input('\nEscolha o número correspondente ao produto para apagá-lo: '))
+            if EscolhaEX in listaEscolhida:
+                print(f'\nFoi apagado o item ({cardapio[EscolhaEX]["nome"]}) com preço (R${cardapio[EscolhaEX]["pr"]:.2f})')
+                del cardapio[EscolhaEX]
+                break
+            else:
+                print('\nInsira um número válido!')
+
+        print(f'\nCardápio Atualizado!')
+        print(47 * '-')
+
+        for index in cardapio:
+            print(f'|{index["nome"]} R${index["pr"]:.2f}')
 print("-----------------------------------------")
 print("Escolha a função do programa")
 
@@ -87,6 +129,7 @@ while True:
         adicionarItem()
         break
     if escolha == 1:
+        excluir()
         break
 
     if escolha == 2:
