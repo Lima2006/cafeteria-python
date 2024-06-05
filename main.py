@@ -26,6 +26,25 @@ def buscar():
     print("-----------------------------------------------------------")
 
 
+def alterar_item():
+    print("Cardápio completo:")
+    print(cardapio)
+
+    itens = input("Qual a informaçao do cardápio que deseja alterar: ")
+
+    if itens in cardapio:
+        novo_valor = input(f"Informe a nova informaçao para o produto: '{itens}': ")
+        cardapio[itens] = novo_valor
+
+        print("\nCardápio atualizado:")
+
+        print(cardapio)
+
+    else:
+        print(f"A informaçao '{itens}' nao existe no cardápio.")
+    print("-----------------------------------------")
+
+
 def adicionarItem():
     nome = str(input("Nome do produto: "))
     preco = float(input("Preço do produto: "))
@@ -160,6 +179,7 @@ while True:
         break
 
     if escolha == 2:
+        alterar_item()
         break
 
     if escolha == 3:
