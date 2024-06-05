@@ -1,1 +1,1 @@
-{"nome_da_cafeteria": "Tô com Fome", "categorias": ["Bebida", "Entradas", "Pratos Principais", "Sobremesas"]}
+{"nome_da_cafeteria": "Tô com Fome"}
