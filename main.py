@@ -1,30 +1,29 @@
 import json
 
-# Variáveis globais
+# Variável global
 categorias = ["Bebida", "Entradas", "Pratos Principais", "Sobremesas"]
 
 
-##### Funções para manipulação de arquivos #####
-# Carrega o conteúdo do arquivo cardapio.txt e atribui à variável cardapio
+# Carregar o conteúdo do arquivo cardapio.txt e atribui à variável cardapio
 with open("./cardapio.txt", "r") as arquivo:
     conteudoArquivo = arquivo.read()
     cardapio = json.loads(conteudoArquivo)
-################################################
-def buscar ():
+
+
+def buscar():
     print("-----------------------------------------------------------")
     esc = str(input("Digite o nome do produto: "))
     var_escolha = False
     for item in cardapio:
         if item["nome"] == esc.title():
             var_escolha = True
-            print("Nome do produto: ",item["nome"])
-            print("Custo do produto : R$",item["pr"])
+            print("Nome do produto: ", item["nome"])
+            print("Custo do produto : R$", item["pr"])
             print("Categoria: ", item["categoria"])
             print("Sub Categoria: ", item["sub_categoria"])
     if var_escolha == False:
         print("Produto nao encontrado")
     print("-----------------------------------------------------------")
-
 
 
 def adicionarItem():
@@ -50,9 +49,11 @@ def adicionarItem():
 
     cardapio.append(produto)
 
+
 def listar_produtos():
-    
-    print("1 - Bebidas\n2 - Entrada\n3 - Pratos Principais\n4 - Sobremesas\n5 - Todos os Produtos")
+    print(
+        "1 - Bebidas\n2 - Entrada\n3 - Pratos Principais\n4 - Sobremesas\n5 - Todos os Produtos"
+    )
 
     while True:
         esc = int(input("\nDigite o número referente a listagem: "))
@@ -85,49 +86,60 @@ def listar_produtos():
         else:
             print("Escolha uma opção válida")
     print("-------------------------------------------------------------------------")
+
+
 def excluir():
-        print('\n1 - Bebidas \n2 - Entradas \n3 - Pratos Principais \n4 - Sobremesas')
+    print("\n1 - Bebidas \n2 - Entradas \n3 - Pratos Principais \n4 - Sobremesas")
 
-        while True:
-            Escolha = int(input('\nEscolha um número para selecionar a categoria do item a ser apagado: '))
-            if Escolha == 1:
-                Escolha = "bebidas"
-                break
-            elif Escolha == 2:
-                Escolha = "entrada"
-                break
-            elif Escolha == 3:
-                Escolha = "pratos principais"
-                break
-            elif Escolha == 4:
-                Escolha = "sobremesas"
-                break
-            else:
-                print('\nNúmero inválido, digite um válido!')
+    while True:
+        Escolha = int(
+            input(
+                "\nEscolha um número para selecionar a categoria do item a ser apagado: "
+            )
+        )
+        if Escolha == 1:
+            Escolha = "bebidas"
+            break
+        elif Escolha == 2:
+            Escolha = "entrada"
+            break
+        elif Escolha == 3:
+            Escolha = "pratos principais"
+            break
+        elif Escolha == 4:
+            Escolha = "sobremesas"
+            break
+        else:
+            print("\nNúmero inválido, digite um válido!")
 
-        listaEscolhida = []
-        print("Cardápio")
-        print(47 * '-')
-        for i, item in enumerate(cardapio):
-            if Escolha in item.values():
-                print(f'|{i} - {item["nome"]} R${item["pr"]:.2f}')
-                listaEscolhida.append(i)
+    listaEscolhida = []
+    print("Cardápio")
+    print(47 * "-")
+    for i, item in enumerate(cardapio):
+        if Escolha in item.values():
+            print(f'|{i} - {item["nome"]} R${item["pr"]:.2f}')
+            listaEscolhida.append(i)
+
+    while True:
+        EscolhaEX = int(
+            input("\nEscolha o número correspondente ao produto para apagá-lo: ")
+        )
+        if EscolhaEX in listaEscolhida:
+            print(
+                f'\nFoi apagado o item ({cardapio[EscolhaEX]["nome"]}) com preço (R${cardapio[EscolhaEX]["pr"]:.2f})'
+            )
+            del cardapio[EscolhaEX]
+            break
+        else:
+            print("\nInsira um número válido!")
+
+    print(f"\nCardápio Atualizado!")
+    print(47 * "-")
+
+    for index in cardapio:
+        print(f'|{index["nome"]} R${index["pr"]:.2f}')
 
 
-        while True:
-            EscolhaEX = int(input('\nEscolha o número correspondente ao produto para apagá-lo: '))
-            if EscolhaEX in listaEscolhida:
-                print(f'\nFoi apagado o item ({cardapio[EscolhaEX]["nome"]}) com preço (R${cardapio[EscolhaEX]["pr"]:.2f})')
-                del cardapio[EscolhaEX]
-                break
-            else:
-                print('\nInsira um número válido!')
-
-        print(f'\nCardápio Atualizado!')
-        print(47 * '-')
-
-        for index in cardapio:
-            print(f'|{index["nome"]} R${index["pr"]:.2f}')
 print("-----------------------------------------")
 print("Escolha a função do programa")
 
