@@ -1,3 +1,4 @@
+print("-----------------------------------------")
 produtoscafeteria = {
     "nome": "cappuccino",
     "pr": 7,
@@ -20,3 +21,4 @@ if itens in produtoscafeteria:
 
 else:
     print(f"A informaçao '{itens}' nao existe no catálogo.")
+print("-----------------------------------------")
