@@ -35,6 +35,41 @@ def adicionarItem():
 
     cardapio.append(produto)
 
+def listar_produtos():
+    
+    print("1 - Bebidas\n2 - Entrada\n3 - Pratos Principais\n4 - Sobremesas\n5 - Todos os Produtos")
+
+    while True:
+        esc = int(input("\nDigite o número referente a listagem: "))
+        print("\nListagem dos produtos a seguir\n")
+        if esc == 1:
+            for item in cardapio:
+                if item["categoria"] == str("bebidas"):
+                    print(item["nome"])
+            break
+        if esc == 2:
+            for item in cardapio:
+                if item["categoria"] == str("entrada"):
+                    print(item["nome"])
+            break
+        if esc == 3:
+            for item in cardapio:
+                if item["categoria"] == str("pratos principais"):
+                    print(item["nome"])
+            break
+        if esc == 4:
+            for item in cardapio:
+                if item["categoria"] == str("sobremesas"):
+                    print(item["nome"])
+            break
+        if esc == 5:
+            for item in cardapio:
+                if item["categoria"]:
+                    print(item["nome"])
+            break
+        else:
+            print("Escolha uma opção válida")
+    print("-------------------------------------------------------------------------")
 
 print("-----------------------------------------")
 print("Escolha a função do programa")
@@ -61,6 +96,7 @@ while True:
         break
 
     if escolha == 4:
+        listar_produtos()
         break
     print("Escolha uma opção válida")
 
