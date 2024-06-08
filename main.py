@@ -198,6 +198,28 @@ def listar_produtos():
     print("-------------------------------------------------------------------------")
 
 
+def add_carrinho():
+    print("---------------------------------------------------------------------------")
+    items = []
+
+    while True:
+        esc = str(input("Digite o nome do produto: "))
+        var_escolha = False
+        for item in cardapio:
+            if item["nome"] == esc.title():
+                var_escolha = True
+                items.append(item["preco"])
+        if esc == "sair":
+            break
+        elif var_escolha == False:
+            print("Produto nao encontrado")
+            break
+
+    soma = sum(items)
+    print(f"A soma dos valores totais dos produtos escolhidos será: R$:{soma:.2f}")
+    print("---------------------------------------------------------------------------")
+
+
 print("-----------------------------------------")
 print("Escolha a função do programa")
 
@@ -206,6 +228,7 @@ print("1 - Excluir itens do cardápio")
 print("2 - Alterar itens do cardápio")
 print("3 - Buscar itens no cardápio")
 print("4 - Listar todos os itens do cardápio")
+print("5 - Adicionar produtos ao carrinho e mostrar seu valor")
 print("-----------------------------------------")
 
 while True:
@@ -228,6 +251,11 @@ while True:
     if escolha == 4:
         listar_produtos()
         break
+    if escolha == 5:
+        add_carrinho()
+        break
+    else:
+        print("Escolha uma opção válida")
     print("Escolha uma opção válida")
 
 # Guardar o cardapio atualizado no arquivo cardapio.txt
