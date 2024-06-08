@@ -2,16 +2,15 @@ import json
 
 # Variável global
 NOME_DO_RESTAURANTE = "Tô com Fome"
-CATEGORIAS = ["Bebida", "Entradas", "Pratos Principais", "Sobremesas"]
+CATEGORIAS = ["bebidas", "entradas", "pratos principais", "sobremesas"]
 
-
-# Carregar o conteúdo do arquivo cardapio.txt e atribui à variável cardapio
+# Carrega o conteúdo do arquivo cardapio.txt e atribui à variável cardapio
 with open("./cardapio.txt", "r") as arquivo:
     conteudoArquivo = arquivo.read()
     cardapio = json.loads(conteudoArquivo)
 
 
-def adicionarItem():
+def adicionar_item():
     nome = str(input("Nome do produto: "))
     preco = float(input("Preço do produto: "))
     categoria = ""
@@ -33,6 +32,109 @@ def adicionarItem():
     }
 
     cardapio.append(produto)
+
+
+def alterar_item():
+    print("-----------------------------------------")
+    for i, categoria in enumerate(CATEGORIAS):
+        print(f"{i} - {categoria}")
+
+    while True:
+        indexCategoriaEscolhida = int(
+            input("Selecione a categoria do item a ser editado: ")
+        )
+        if indexCategoriaEscolhida >= 0 and indexCategoriaEscolhida < len(CATEGORIAS):
+            break
+        print("Insira um valor válido!")
+    quantidadeDeItemsElegiveis = 0
+    for i, produto in enumerate(cardapio):
+        if produto["categoria"] == CATEGORIAS[indexCategoriaEscolhida]:
+            quantidadeDeItemsElegiveis += 1
+            print(f"|{i} - {produto['nome']}")
+    if quantidadeDeItemsElegiveis == 0:
+        print("Sem produtos nessa categoria!")
+        return
+    while True:
+        indexProdutoSelecionado = int(input("Selecione o produto para alterar: "))
+        if (
+            indexProdutoSelecionado >= 0
+            and indexProdutoSelecionado < quantidadeDeItemsElegiveis
+        ):
+            break
+        print("Insira um valor válido!")
+        print("Insira os novos valores (se não deseja alterar o campo, deixe vazio)")
+    itemParaEditar = cardapio.pop(indexProdutoSelecionado)
+    nome = str(input("Nome do produto: ")) or itemParaEditar["nome"]
+    preco = float(input("Preço do produto: ") or 0) or itemParaEditar["preco"]
+    categoria = itemParaEditar["categoria"]
+    opcoes = ["não alterar"]
+    opcoes.extend(CATEGORIAS)
+    while True:
+        print("Selecione uma categoria:")
+        for i, opcao in enumerate(opcoes):
+            print(f"{i} - {opcao}")
+        escolha = int(input("Digite o número da categoria: "))
+        if escolha == 0:
+            break
+        if escolha > 0 and escolha < len(opcoes):
+            categoria = CATEGORIAS[escolha - 1]
+            break
+        print("Insira uma opção válida!")
+    sub_categoria = (
+        str(input("Subcategoria do produto: ")) or itemParaEditar["sub_categoria"]
+    )
+
+    produto = {
+        "nome": nome,
+        "preco": preco,
+        "categoria": categoria,
+        "sub_categoria": sub_categoria,
+    }
+
+    cardapio.append(produto)
+
+    # # while True:
+    # #     produto_alterar = input("\nQual produto deseja alterar no cardápio: ")
+
+    # #     encontrou_produto = False
+    # #     for produto in cardapio:
+    # #         if produto["nome"].lower() == produto_alterar.lower():
+    # #             encontrou_produto = True
+
+    # #             print("\nEscolha qual informação deseja alterar:")
+    # #             print("1. Nome")
+    # #             print("2. Preço")
+    # #             print("3. Categoria")
+    # #             print("4. Sub-categoria")
+    # #             opcao = input("Opção: ")
+
+    #             # if opcao == "1":
+    #             #     novo_nome = input("Digite o novo nome: ")
+    #             #     produto["Nome"] = novo_nome
+    #             # elif opcao == "2":
+    #             #     novo_preco = input("Digite o novo preço: ")
+    #             #     produto["pr"] = novo_preco
+    #             # elif opcao == "3":
+    #             #     nova_categoria = input("Digite a nova categoria: ")
+    #             #     produto["categoria"] = nova_categoria
+    #             # elif opcao == "4":
+    #             #     nova_subcategoria = input("Digite a nova sub-categoria: ")
+    #             # else:
+    #             #     print("Opção inválida.")
+
+    #             print(f"\n'{produto_alterar}' foi atualizado.")
+    #             break
+
+    #     if not encontrou_produto:
+    #         print(f"\n'{produto_alterar}' não foi encontrado no cardápio da cafeteria. Tente novamente.")
+    #         continue
+
+    #     print("\nProdutos depois da alteração:")
+    #     for produto in cardapio:
+    #         print(produto)
+
+    # break
+    print("-----------------------------------------")
 
 
 def excluir():
@@ -85,25 +187,6 @@ def excluir():
 
     for index in cardapio:
         print(f'|{index["nome"]} R${index["pr"]:.2f}')
-
-
-def alterar_item():
-    print("Cardápio completo:")
-    print(cardapio)
-
-    itens = input("Qual a informaçao do cardápio que deseja alterar: ")
-
-    if itens in cardapio:
-        novo_valor = input(f"Informe a nova informaçao para o produto: '{itens}': ")
-        cardapio[itens] = novo_valor
-
-        print("\nCardápio atualizado:")
-
-        print(cardapio)
-
-    else:
-        print(f"A informaçao '{itens}' nao existe no cardápio.")
-    print("-----------------------------------------")
 
 
 def buscar():
@@ -173,7 +256,7 @@ print("-----------------------------------------")
 while True:
     escolha = int(input("Digite o número referente a função: "))
     if escolha == 0:
-        adicionarItem()
+        adicionar_item()
         break
     if escolha == 1:
         excluir()
@@ -192,5 +275,6 @@ while True:
         break
     print("Escolha uma opção válida")
 
+# Guardar o cardapio atualizado no arquivo cardapio.txt
 with open("./cardapio.txt", "w") as arquivo:
     arquivo.write(json.dumps(cardapio))
