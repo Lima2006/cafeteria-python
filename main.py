@@ -4,33 +4,15 @@ import json
 NOME_DO_RESTAURANTE = "Tô com Fome"
 CATEGORIAS = ["Bebida", "Entradas", "Pratos Principais", "Sobremesas"]
 
-
-# Carregar o conteúdo do arquivo cardapio.txt e atribui à variável cardapio
+# Carrega o conteúdo do arquivo cardapio.txt e atribui à variável cardapio
 with open("./cardapio.txt", "r") as arquivo:
     conteudoArquivo = arquivo.read()
     cardapio = json.loads(conteudoArquivo)
 
-
-def buscar():
-    print("-----------------------------------------------------------")
-    esc = str(input("Digite o nome do produto: "))
-    var_escolha = False
-    for item in cardapio:
-        if item["nome"] == esc.title():
-            var_escolha = True
-            print("Nome do produto: ", item["nome"])
-            print("Custo do produto : R$", item["pr"])
-            print("Categoria: ", item["categoria"])
-            print("Sub Categoria: ", item["sub_categoria"])
-    if var_escolha == False:
-        print("Produto nao encontrado")
-    print("-----------------------------------------------------------")
-
-
 def alterar_item():
     print("-----------------------------------------")
     print("\n1 - Bebidas \n2 - Entradas \n3 - Pratos Principais \n4 - Sobremesas")
-    
+
     while True:
         Escolha = int(
             input(
@@ -51,21 +33,17 @@ def alterar_item():
             break
         else:
             print("\nNúmero inválido, digite um válido!")
-    for i,produto in enumerate(cardapio):
-        
-        if produto['categoria'] == Escolha:
+    for i, produto in enumerate(cardapio):
+        if produto["categoria"] == Escolha:
             print(f"|{i} - {produto['nome']}")
-            
-            
-    
+
     # # while True:
     # #     produto_alterar = input("\nQual produto deseja alterar no cardápio: ")
 
     # #     encontrou_produto = False
     # #     for produto in cardapio:
-    # #         if produto["nome"].lower() == produto_alterar.lower(): 
+    # #         if produto["nome"].lower() == produto_alterar.lower():
     # #             encontrou_produto = True
-
 
     # #             print("\nEscolha qual informação deseja alterar:")
     # #             print("1. Nome")
@@ -73,7 +51,6 @@ def alterar_item():
     # #             print("3. Categoria")
     # #             print("4. Sub-categoria")
     # #             opcao = input("Opção: ")
-
 
     #             # if opcao == "1":
     #             #     novo_nome = input("Digite o novo nome: ")
@@ -88,7 +65,6 @@ def alterar_item():
     #             #     nova_subcategoria = input("Digite a nova sub-categoria: ")
     #             # else:
     #             #     print("Opção inválida.")
-            
 
     #             print(f"\n'{produto_alterar}' foi atualizado.")
     #             break
@@ -100,8 +76,8 @@ def alterar_item():
     #     print("\nProdutos depois da alteração:")
     #     for produto in cardapio:
     #         print(produto)
-        
-        # break
+
+    # break
     print("-----------------------------------------")
 
 
@@ -179,25 +155,6 @@ def excluir():
 
     for index in cardapio:
         print(f'|{index["nome"]} R${index["pr"]:.2f}')
-
-
-def alterar_item():
-    print("Cardápio completo:")
-    print(cardapio)
-
-    itens = input("Qual a informaçao do cardápio que deseja alterar: ")
-
-    if itens in cardapio:
-        novo_valor = input(f"Informe a nova informaçao para o produto: '{itens}': ")
-        cardapio[itens] = novo_valor
-
-        print("\nCardápio atualizado:")
-
-        print(cardapio)
-
-    else:
-        print(f"A informaçao '{itens}' nao existe no cardápio.")
-    print("-----------------------------------------")
 
 
 def buscar():
