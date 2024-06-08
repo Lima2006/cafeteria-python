@@ -9,6 +9,31 @@ with open("./cardapio.txt", "r") as arquivo:
     conteudoArquivo = arquivo.read()
     cardapio = json.loads(conteudoArquivo)
 
+
+def adicionarItem():
+    nome = str(input("Nome do produto: "))
+    preco = float(input("Preço do produto: "))
+    categoria = ""
+    while True:
+        print("Selecione uma categoria:")
+        for i, opcao in enumerate(CATEGORIAS):
+            print(f"{i + 1} - {opcao}")
+        escolha = int(input("Digite o número da categoria: ")) - 1
+        if escolha >= 0 and escolha <= len(CATEGORIAS):
+            categoria = CATEGORIAS[escolha]
+            break
+    sub_categoria = str(input("Subcategoria do produto: "))
+
+    produto = {
+        "nome": nome,
+        "preco": preco,
+        "categoria": categoria,
+        "sub_categoria": sub_categoria,
+    }
+
+    cardapio.append(produto)
+
+
 def alterar_item():
     print("-----------------------------------------")
     print("\n1 - Bebidas \n2 - Entradas \n3 - Pratos Principais \n4 - Sobremesas")
@@ -36,6 +61,22 @@ def alterar_item():
     for i, produto in enumerate(cardapio):
         if produto["categoria"] == Escolha:
             print(f"|{i} - {produto['nome']}")
+    while True:
+        indexSelecionado = int(input("\O que você deseja alterar no item? "))
+        if Escolha == 1:
+            Escolha = "nome"
+            break
+        elif Escolha == 2:
+            Escolha = "preco"
+            break
+        elif Escolha == 3:
+            Escolha = "categoria"
+            break
+        elif Escolha == 4:
+            Escolha = "sub_categoria"
+            break
+        else:
+            print("\nNúmero inválido, digite um válido!")
 
     # # while True:
     # #     produto_alterar = input("\nQual produto deseja alterar no cardápio: ")
@@ -79,30 +120,6 @@ def alterar_item():
 
     # break
     print("-----------------------------------------")
-
-
-def adicionarItem():
-    nome = str(input("Nome do produto: "))
-    preco = float(input("Preço do produto: "))
-    categoria = ""
-    while True:
-        print("Selecione uma categoria:")
-        for i, opcao in enumerate(CATEGORIAS):
-            print(f"{i + 1} - {opcao}")
-        escolha = int(input("Digite o número da categoria: ")) - 1
-        if escolha >= 0 and escolha <= len(CATEGORIAS):
-            categoria = CATEGORIAS[escolha]
-            break
-    sub_categoria = str(input("Subcategoria do produto: "))
-
-    produto = {
-        "nome": nome,
-        "preco": preco,
-        "categoria": categoria,
-        "sub_categoria": sub_categoria,
-    }
-
-    cardapio.append(produto)
 
 
 def excluir():
@@ -243,5 +260,6 @@ while True:
         break
     print("Escolha uma opção válida")
 
+# Guardar o cardapio atualizado no arquivo cardapio.txt
 with open("./cardapio.txt", "w") as arquivo:
     arquivo.write(json.dumps(cardapio))
