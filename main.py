@@ -1,7 +1,8 @@
 import json
 
 # Variável global
-categorias = ["Bebida", "Entradas", "Pratos Principais", "Sobremesas"]
+NOME_DO_RESTAURANTE = "Tô com Fome"
+CATEGORIAS = ["Bebida", "Entradas", "Pratos Principais", "Sobremesas"]
 
 
 # Carregar o conteúdo do arquivo cardapio.txt e atribui à variável cardapio
@@ -10,52 +11,17 @@ with open("./cardapio.txt", "r") as arquivo:
     cardapio = json.loads(conteudoArquivo)
 
 
-def buscar():
-    print("-----------------------------------------------------------")
-    esc = str(input("Digite o nome do produto: "))
-    var_escolha = False
-    for item in cardapio:
-        if item["nome"] == esc.title():
-            var_escolha = True
-            print("Nome do produto: ", item["nome"])
-            print("Custo do produto : R$", item["pr"])
-            print("Categoria: ", item["categoria"])
-            print("Sub Categoria: ", item["sub_categoria"])
-    if var_escolha == False:
-        print("Produto nao encontrado")
-    print("-----------------------------------------------------------")
-
-
-def alterar_item():
-    print("Cardápio completo:")
-    print(cardapio)
-
-    itens = input("Qual a informaçao do cardápio que deseja alterar: ")
-
-    if itens in cardapio:
-        novo_valor = input(f"Informe a nova informaçao para o produto: '{itens}': ")
-        cardapio[itens] = novo_valor
-
-        print("\nCardápio atualizado:")
-
-        print(cardapio)
-
-    else:
-        print(f"A informaçao '{itens}' nao existe no cardápio.")
-    print("-----------------------------------------")
-
-
 def adicionarItem():
     nome = str(input("Nome do produto: "))
     preco = float(input("Preço do produto: "))
     categoria = ""
     while True:
         print("Selecione uma categoria:")
-        for i, opcao in enumerate(categorias):
+        for i, opcao in enumerate(CATEGORIAS):
             print(f"{i + 1} - {opcao}")
         escolha = int(input("Digite o número da categoria: ")) - 1
-        if escolha >= 0 and escolha <= len(categorias):
-            categoria = categorias[escolha]
+        if escolha >= 0 and escolha <= len(CATEGORIAS):
+            categoria = CATEGORIAS[escolha]
             break
     sub_categoria = str(input("Subcategoria do produto: "))
 
@@ -67,44 +33,6 @@ def adicionarItem():
     }
 
     cardapio.append(produto)
-
-
-def listar_produtos():
-    print(
-        "1 - Bebidas\n2 - Entrada\n3 - Pratos Principais\n4 - Sobremesas\n5 - Todos os Produtos"
-    )
-
-    while True:
-        esc = int(input("\nDigite o número referente a listagem: "))
-        print("\nListagem dos produtos a seguir\n")
-        if esc == 1:
-            for item in cardapio:
-                if item["categoria"] == str("bebidas"):
-                    print(item["nome"])
-            break
-        if esc == 2:
-            for item in cardapio:
-                if item["categoria"] == str("entrada"):
-                    print(item["nome"])
-            break
-        if esc == 3:
-            for item in cardapio:
-                if item["categoria"] == str("pratos principais"):
-                    print(item["nome"])
-            break
-        if esc == 4:
-            for item in cardapio:
-                if item["categoria"] == str("sobremesas"):
-                    print(item["nome"])
-            break
-        if esc == 5:
-            for item in cardapio:
-                if item["categoria"]:
-                    print(item["nome"])
-            break
-        else:
-            print("Escolha uma opção válida")
-    print("-------------------------------------------------------------------------")
 
 
 def excluir():
@@ -157,6 +85,79 @@ def excluir():
 
     for index in cardapio:
         print(f'|{index["nome"]} R${index["pr"]:.2f}')
+
+
+def alterar_item():
+    print("Cardápio completo:")
+    print(cardapio)
+
+    itens = input("Qual a informaçao do cardápio que deseja alterar: ")
+
+    if itens in cardapio:
+        novo_valor = input(f"Informe a nova informaçao para o produto: '{itens}': ")
+        cardapio[itens] = novo_valor
+
+        print("\nCardápio atualizado:")
+
+        print(cardapio)
+
+    else:
+        print(f"A informaçao '{itens}' nao existe no cardápio.")
+    print("-----------------------------------------")
+
+
+def buscar():
+    print("-----------------------------------------------------------")
+    esc = str(input("Digite o nome do produto: "))
+    var_escolha = False
+    for item in cardapio:
+        if item["nome"] == esc.title():
+            var_escolha = True
+            print("Nome do produto: ", item["nome"])
+            print("Custo do produto : R$", item["pr"])
+            print("Categoria: ", item["categoria"])
+            print("Sub Categoria: ", item["sub_categoria"])
+    if var_escolha == False:
+        print("Produto nao encontrado")
+    print("-----------------------------------------------------------")
+
+
+def listar_produtos():
+    print(
+        "1 - Bebidas\n2 - Entrada\n3 - Pratos Principais\n4 - Sobremesas\n5 - Todos os Produtos"
+    )
+
+    while True:
+        esc = int(input("\nDigite o número referente a listagem: "))
+        print("\nListagem dos produtos a seguir\n")
+        if esc == 1:
+            for item in cardapio:
+                if item["categoria"] == str("bebidas"):
+                    print(item["nome"])
+            break
+        if esc == 2:
+            for item in cardapio:
+                if item["categoria"] == str("entrada"):
+                    print(item["nome"])
+            break
+        if esc == 3:
+            for item in cardapio:
+                if item["categoria"] == str("pratos principais"):
+                    print(item["nome"])
+            break
+        if esc == 4:
+            for item in cardapio:
+                if item["categoria"] == str("sobremesas"):
+                    print(item["nome"])
+            break
+        if esc == 5:
+            for item in cardapio:
+                if item["categoria"]:
+                    print(item["nome"])
+            break
+        else:
+            print("Escolha uma opção válida")
+    print("-------------------------------------------------------------------------")
 
 
 print("-----------------------------------------")
