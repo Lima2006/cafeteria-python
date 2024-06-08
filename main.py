@@ -27,21 +27,80 @@ def buscar():
 
 
 def alterar_item():
-    print("Cardápio completo:")
-    print(cardapio)
+    print("-----------------------------------------")
+    print("\n1 - Bebidas \n2 - Entradas \n3 - Pratos Principais \n4 - Sobremesas")
+    
+    while True:
+        Escolha = int(
+            input(
+                "\nEscolha um número para selecionar a categoria do item a ser apagado: "
+            )
+        )
+        if Escolha == 1:
+            Escolha = "bebidas"
+            break
+        elif Escolha == 2:
+            Escolha = "entrada"
+            break
+        elif Escolha == 3:
+            Escolha = "pratos principais"
+            break
+        elif Escolha == 4:
+            Escolha = "sobremesas"
+            break
+        else:
+            print("\nNúmero inválido, digite um válido!")
+    for i,produto in enumerate(cardapio):
+        
+        if produto['categoria'] == Escolha:
+            print(f"|{i} - {produto['nome']}")
+            
+            
+    
+    # # while True:
+    # #     produto_alterar = input("\nQual produto deseja alterar no cardápio: ")
 
-    itens = input("Qual a informaçao do cardápio que deseja alterar: ")
+    # #     encontrou_produto = False
+    # #     for produto in cardapio:
+    # #         if produto["nome"].lower() == produto_alterar.lower(): 
+    # #             encontrou_produto = True
 
-    if itens in cardapio:
-        novo_valor = input(f"Informe a nova informaçao para o produto: '{itens}': ")
-        cardapio[itens] = novo_valor
 
-        print("\nCardápio atualizado:")
+    # #             print("\nEscolha qual informação deseja alterar:")
+    # #             print("1. Nome")
+    # #             print("2. Preço")
+    # #             print("3. Categoria")
+    # #             print("4. Sub-categoria")
+    # #             opcao = input("Opção: ")
 
-        print(cardapio)
 
-    else:
-        print(f"A informaçao '{itens}' nao existe no cardápio.")
+    #             # if opcao == "1":
+    #             #     novo_nome = input("Digite o novo nome: ")
+    #             #     produto["Nome"] = novo_nome
+    #             # elif opcao == "2":
+    #             #     novo_preco = input("Digite o novo preço: ")
+    #             #     produto["pr"] = novo_preco
+    #             # elif opcao == "3":
+    #             #     nova_categoria = input("Digite a nova categoria: ")
+    #             #     produto["categoria"] = nova_categoria
+    #             # elif opcao == "4":
+    #             #     nova_subcategoria = input("Digite a nova sub-categoria: ")
+    #             # else:
+    #             #     print("Opção inválida.")
+            
+
+    #             print(f"\n'{produto_alterar}' foi atualizado.")
+    #             break
+
+    #     if not encontrou_produto:
+    #         print(f"\n'{produto_alterar}' não foi encontrado no cardápio da cafeteria. Tente novamente.")
+    #         continue
+
+    #     print("\nProdutos depois da alteração:")
+    #     for produto in cardapio:
+    #         print(produto)
+        
+        # break
     print("-----------------------------------------")
 
 
