@@ -2,7 +2,7 @@ import json
 
 # Variável global
 NOME_DO_RESTAURANTE = "Tô com Fome"
-CATEGORIAS = ["Bebida", "Entradas", "Pratos Principais", "Sobremesas"]
+CATEGORIAS = ["bebidas", "entradas", "pratos principais", "sobremesas"]
 
 # Carrega o conteúdo do arquivo cardapio.txt e atribui à variável cardapio
 with open("./cardapio.txt", "r") as arquivo:
@@ -10,7 +10,7 @@ with open("./cardapio.txt", "r") as arquivo:
     cardapio = json.loads(conteudoArquivo)
 
 
-def adicionarItem():
+def adicionar_item():
     nome = str(input("Nome do produto: "))
     preco = float(input("Preço do produto: "))
     categoria = ""
@@ -36,47 +36,62 @@ def adicionarItem():
 
 def alterar_item():
     print("-----------------------------------------")
-    print("\n1 - Bebidas \n2 - Entradas \n3 - Pratos Principais \n4 - Sobremesas")
+    for i, categoria in enumerate(CATEGORIAS):
+        print(f"{i} - {categoria}")
 
     while True:
-        Escolha = int(
-            input(
-                "\nEscolha um número para selecionar a categoria do item a ser apagado: "
-            )
+        indexCategoriaEscolhida = int(
+            input("Selecione a categoria do item a ser editado: ")
         )
-        if Escolha == 1:
-            Escolha = "bebidas"
+        if indexCategoriaEscolhida >= 0 and indexCategoriaEscolhida < len(CATEGORIAS):
             break
-        elif Escolha == 2:
-            Escolha = "entrada"
-            break
-        elif Escolha == 3:
-            Escolha = "pratos principais"
-            break
-        elif Escolha == 4:
-            Escolha = "sobremesas"
-            break
-        else:
-            print("\nNúmero inválido, digite um válido!")
+        print("Insira um valor válido!")
+    quantidadeDeItemsElegiveis = 0
     for i, produto in enumerate(cardapio):
-        if produto["categoria"] == Escolha:
+        if produto["categoria"] == CATEGORIAS[indexCategoriaEscolhida]:
+            quantidadeDeItemsElegiveis += 1
             print(f"|{i} - {produto['nome']}")
+    if quantidadeDeItemsElegiveis == 0:
+        print("Sem produtos nessa categoria!")
+        return
     while True:
-        indexSelecionado = int(input("\O que você deseja alterar no item? "))
-        if Escolha == 1:
-            Escolha = "nome"
+        indexProdutoSelecionado = int(input("Selecione o produto para alterar: "))
+        if (
+            indexProdutoSelecionado >= 0
+            and indexProdutoSelecionado < quantidadeDeItemsElegiveis
+        ):
             break
-        elif Escolha == 2:
-            Escolha = "preco"
+        print("Insira um valor válido!")
+        print("Insira os novos valores (se não deseja alterar o campo, deixe vazio)")
+    itemParaEditar = cardapio.pop(indexProdutoSelecionado)
+    nome = str(input("Nome do produto: ")) or itemParaEditar["nome"]
+    preco = float(input("Preço do produto: ") or 0) or itemParaEditar["preco"]
+    categoria = itemParaEditar["categoria"]
+    opcoes = ["não alterar"]
+    opcoes.extend(CATEGORIAS)
+    while True:
+        print("Selecione uma categoria:")
+        for i, opcao in enumerate(opcoes):
+            print(f"{i} - {opcao}")
+        escolha = int(input("Digite o número da categoria: "))
+        if escolha == 0:
             break
-        elif Escolha == 3:
-            Escolha = "categoria"
+        if escolha > 0 and escolha < len(opcoes):
+            categoria = CATEGORIAS[escolha - 1]
             break
-        elif Escolha == 4:
-            Escolha = "sub_categoria"
-            break
-        else:
-            print("\nNúmero inválido, digite um válido!")
+        print("Insira uma opção válida!")
+    sub_categoria = (
+        str(input("Subcategoria do produto: ")) or itemParaEditar["sub_categoria"]
+    )
+
+    produto = {
+        "nome": nome,
+        "preco": preco,
+        "categoria": categoria,
+        "sub_categoria": sub_categoria,
+    }
+
+    cardapio.append(produto)
 
     # # while True:
     # #     produto_alterar = input("\nQual produto deseja alterar no cardápio: ")
@@ -241,7 +256,7 @@ print("-----------------------------------------")
 while True:
     escolha = int(input("Digite o número referente a função: "))
     if escolha == 0:
-        adicionarItem()
+        adicionar_item()
         break
     if escolha == 1:
         excluir()
