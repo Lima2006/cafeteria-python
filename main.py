@@ -92,48 +92,6 @@ def alterar_item():
     }
 
     cardapio.append(produto)
-
-    # # while True:
-    # #     produto_alterar = input("\nQual produto deseja alterar no cardápio: ")
-
-    # #     encontrou_produto = False
-    # #     for produto in cardapio:
-    # #         if produto["nome"].lower() == produto_alterar.lower():
-    # #             encontrou_produto = True
-
-    # #             print("\nEscolha qual informação deseja alterar:")
-    # #             print("1. Nome")
-    # #             print("2. Preço")
-    # #             print("3. Categoria")
-    # #             print("4. Sub-categoria")
-    # #             opcao = input("Opção: ")
-
-    #             # if opcao == "1":
-    #             #     novo_nome = input("Digite o novo nome: ")
-    #             #     produto["Nome"] = novo_nome
-    #             # elif opcao == "2":
-    #             #     novo_preco = input("Digite o novo preço: ")
-    #             #     produto["pr"] = novo_preco
-    #             # elif opcao == "3":
-    #             #     nova_categoria = input("Digite a nova categoria: ")
-    #             #     produto["categoria"] = nova_categoria
-    #             # elif opcao == "4":
-    #             #     nova_subcategoria = input("Digite a nova sub-categoria: ")
-    #             # else:
-    #             #     print("Opção inválida.")
-
-    #             print(f"\n'{produto_alterar}' foi atualizado.")
-    #             break
-
-    #     if not encontrou_produto:
-    #         print(f"\n'{produto_alterar}' não foi encontrado no cardápio da cafeteria. Tente novamente.")
-    #         continue
-
-    #     print("\nProdutos depois da alteração:")
-    #     for produto in cardapio:
-    #         print(produto)
-
-    # break
     print("-----------------------------------------")
 
 
@@ -166,7 +124,7 @@ def excluir():
     print(47 * "-")
     for i, item in enumerate(cardapio):
         if Escolha in item.values():
-            print(f'|{i} - {item["nome"]} R${item["pr"]:.2f}')
+            print(f'|{i} - {item["nome"]} R${item["preco"]:.2f}')
             listaEscolhida.append(i)
 
     while True:
@@ -175,7 +133,7 @@ def excluir():
         )
         if EscolhaEX in listaEscolhida:
             print(
-                f'\nFoi apagado o item ({cardapio[EscolhaEX]["nome"]}) com preço (R${cardapio[EscolhaEX]["pr"]:.2f})'
+                f'\nFoi apagado o item ({cardapio[EscolhaEX]["nome"]}) com preço (R${cardapio[EscolhaEX]["preco"]:.2f})'
             )
             del cardapio[EscolhaEX]
             break
@@ -185,19 +143,16 @@ def excluir():
     print(f"\nCardápio Atualizado!")
     print(47 * "-")
 
-    for index in cardapio:
-        print(f'|{index["nome"]} R${index["pr"]:.2f}')
-
 
 def buscar():
     print("-----------------------------------------------------------")
     esc = str(input("Digite o nome do produto: "))
     var_escolha = False
     for item in cardapio:
-        if item["nome"] == esc.title():
+        if item["nome"].lower() == esc.lower():
             var_escolha = True
             print("Nome do produto: ", item["nome"])
-            print("Custo do produto : R$", item["pr"])
+            print("Custo do produto : R$", item["preco"])
             print("Categoria: ", item["categoria"])
             print("Sub Categoria: ", item["sub_categoria"])
     if var_escolha == False:
