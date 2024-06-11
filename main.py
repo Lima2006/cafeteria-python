@@ -4,10 +4,21 @@ import json
 NOME_DO_RESTAURANTE = "Tô com Fome"
 CATEGORIAS = ["bebidas", "entradas", "pratos principais", "sobremesas"]
 
+
+def ler_arquivo_json(caminho):
+    with open(caminho, "r") as arquivo:
+        conteudoArquivo = arquivo.read()
+        return json.loads(conteudoArquivo)
+
+
+def escrever_arquivo_json(dados, caminho):
+    with open(caminho, "w") as arquivo:
+        arquivo.write(json.dumps(dados))
+
+
 # Carrega o conteúdo do arquivo cardapio.txt e atribui à variável cardapio
-with open("./cardapio.txt", "r") as arquivo:
-    conteudoArquivo = arquivo.read()
-    cardapio = json.loads(conteudoArquivo)
+cardapio = ler_arquivo_json("./cardapio.txt")
+carrinho = ler_arquivo_json("./carrinho.txt")
 
 
 def adicionar_item():
@@ -124,7 +135,7 @@ def excluir():
     print(47 * "-")
     for i, item in enumerate(cardapio):
         if Escolha in item.values():
-            print(f'|{i} - {item["nome"]} R${item["preco"]:.2f}')
+            print(f'|{i} - {item["nome"]} R${float(item["preco"]):.2f}')
             listaEscolhida.append(i)
 
     while True:
@@ -200,24 +211,47 @@ def listar_produtos():
 
 def add_carrinho():
     print("---------------------------------------------------------------------------")
-    items = []
+    for i, categoria in enumerate(CATEGORIAS):
+        print(f"{i} - {categoria}")
 
     while True:
-        esc = str(input("Digite o nome do produto: "))
-        var_escolha = False
-        for item in cardapio:
-            if item["nome"] == esc.title():
-                var_escolha = True
-                items.append(item["preco"])
-        if esc == "sair":
+        indexCategoriaEscolhida = int(
+            input("Selecione a categoria do item a ser adicionado ao carrinho: ")
+        )
+        if indexCategoriaEscolhida >= 0 and indexCategoriaEscolhida < len(CATEGORIAS):
             break
-        elif var_escolha == False:
-            print("Produto nao encontrado")
+        print("Insira um valor válido!")
+    indicesElegiveis = []
+    for i, produto in enumerate(cardapio):
+        if produto["categoria"] == CATEGORIAS[indexCategoriaEscolhida]:
+            indicesElegiveis.append(i)
+            print(f"|{i} - {produto['nome']}")
+    if len(indicesElegiveis) <= 0:
+        print("Sem produtos nessa categoria!")
+        return
+    while True:
+        indiceProdutoSelecionado = int(
+            input("Selecione o produto para adicionar ao carrinho: ")
+        )
+        if indiceProdutoSelecionado in indicesElegiveis:
+            carrinho.append(cardapio[indiceProdutoSelecionado])
             break
-
-    soma = sum(items)
-    print(f"A soma dos valores totais dos produtos escolhidos será: R$:{soma:.2f}")
+        print("Insira um índice válido!")
+        print("Itens no carrinho: ")
     print("---------------------------------------------------------------------------")
+
+
+def mostrar_carrinho():
+    soma = 0
+    for item in carrinho:
+        soma += float(item["preco"])
+        print(f"{item['nome']} (R$ {float(item['preco']):.2f})")
+    print(f"A soma dos valores totais dos produtos escolhidos será: R$ {soma:.2f}")
+
+
+def limpar_carrinho():
+    carrinho.clear()
+    print("Carrinho esvaziado com sucesso!")
 
 
 print("-----------------------------------------")
@@ -228,7 +262,9 @@ print("1 - Excluir itens do cardápio")
 print("2 - Alterar itens do cardápio")
 print("3 - Buscar itens no cardápio")
 print("4 - Listar todos os itens do cardápio")
-print("5 - Adicionar produtos ao carrinho e mostrar seu valor")
+print("5 - Adicionar produtos ao carrinho")
+print("6 - Mostrar carrinho")
+print("7 - Limpar o carrinho")
 print("-----------------------------------------")
 
 while True:
@@ -254,10 +290,18 @@ while True:
     if escolha == 5:
         add_carrinho()
         break
+    if escolha == 6:
+        mostrar_carrinho()
+        break
+    if escolha == 7:
+        limpar_carrinho()
+        break
     else:
         print("Escolha uma opção válida")
     print("Escolha uma opção válida")
 
+
 # Guardar o cardapio atualizado no arquivo cardapio.txt
-with open("./cardapio.txt", "w") as arquivo:
-    arquivo.write(json.dumps(cardapio))
+escrever_arquivo_json(cardapio, "./cardapio.txt")
+# Guardar o carrinho atualizado no arquivo carrinho.txt
+escrever_arquivo_json(carrinho, "./carrinho.txt")
