@@ -1,7 +1,6 @@
 import json
 
 # Variável global
-NOME_DO_RESTAURANTE = "Tô com Fome"
 CATEGORIAS = ["bebidas", "entradas", "pratos principais", "sobremesas"]
 
 
@@ -16,9 +15,16 @@ def escrever_arquivo_json(dados, caminho):
         arquivo.write(json.dumps(dados))
 
 
+escrever_arquivo_json(
+    {"nome_da_cafeteria": "Cafeteria Tô com Fome", "porcentagem_do_garcom": 0.015},
+    "configuracoes.txt",
+)
+
+
 # Carrega o conteúdo do arquivo cardapio.txt e atribui à variável cardapio
 cardapio = ler_arquivo_json("./cardapio.txt")
 carrinho = ler_arquivo_json("./carrinho.txt")
+configuracoes = ler_arquivo_json("./configuracoes.txt")
 
 
 def adicionar_item():
@@ -254,6 +260,8 @@ def limpar_carrinho():
     print("Carrinho esvaziado com sucesso!")
 
 
+print("-----------------------------------------")
+print(configuracoes["nome_da_cafeteria"])
 print("-----------------------------------------")
 print("Escolha a função do programa")
 
