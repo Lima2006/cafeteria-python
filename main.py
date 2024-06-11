@@ -34,8 +34,8 @@ def adicionar_item():
     while True:
         print("Selecione uma categoria:")
         for i, opcao in enumerate(CATEGORIAS):
-            print(f"{i + 1} - {opcao}")
-        escolha = int(input("Digite o número da categoria: ")) - 1
+            print(f"{i} - {opcao}")
+        escolha = int(input("Digite o número da categoria: "))
         if escolha >= 0 and escolha <= len(CATEGORIAS):
             categoria = CATEGORIAS[escolha]
             break
