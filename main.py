@@ -1,7 +1,7 @@
 import json
 
 # Variável global
-CATEGORIAS = ["bebidas", "entradas", "pratos principais", "sobremesas"]
+CATEGORIAS = ["bebidas", "entrada", "pratos principais", "sobremesas"]
 
 
 def ler_arquivo_json(caminho):
