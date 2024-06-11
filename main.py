@@ -249,10 +249,14 @@ def add_carrinho():
 
 def mostrar_carrinho():
     soma = 0
+    porcentagemDoGarcom = float(configuracoes["porcentagem_do_garcom"])
     for item in carrinho:
         soma += float(item["preco"])
         print(f"{item['nome']} (R$ {float(item['preco']):.2f})")
-    print(f"A soma dos valores totais dos produtos escolhidos será: R$ {soma:.2f}")
+    print(f"A soma dos valores dos produtos escolhidos será R$ {soma:.2f}")
+    print(f"A porcentagem do garçom é {porcentagemDoGarcom * 100}%")
+    totalCarrinho = soma * (porcentagemDoGarcom + 1)
+    print(f"O total dos valores será R$ {totalCarrinho:.2f}")
 
 
 def limpar_carrinho():
