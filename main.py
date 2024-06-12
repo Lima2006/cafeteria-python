@@ -63,23 +63,21 @@ def alterar_item():
         if indexCategoriaEscolhida >= 0 and indexCategoriaEscolhida < len(CATEGORIAS):
             break
         print("Insira um valor válido!")
-    quantidadeDeItemsElegiveis = 0
+    itensElegiveis = []
     for i, produto in enumerate(cardapio):
         if produto["categoria"] == CATEGORIAS[indexCategoriaEscolhida]:
-            quantidadeDeItemsElegiveis += 1
+            itensElegiveis.append(i)
             print(f"|{i} - {produto['nome']}")
-    if quantidadeDeItemsElegiveis == 0:
+    if not len(itensElegiveis):
         print("Sem produtos nessa categoria!")
         return
     while True:
         indexProdutoSelecionado = int(input("Selecione o produto para alterar: "))
-        if (
-            indexProdutoSelecionado >= 0
-            and indexProdutoSelecionado < quantidadeDeItemsElegiveis
-        ):
+        print(indexProdutoSelecionado)
+        if indexProdutoSelecionado in itensElegiveis:
             break
         print("Insira um valor válido!")
-        print("Insira os novos valores (se não deseja alterar o campo, deixe vazio)")
+    print("Insira os novos valores (se não deseja alterar o campo, deixe vazio)")
     itemParaEditar = cardapio.pop(indexProdutoSelecionado)
     nome = str(input("Nome do produto: ")) or itemParaEditar["nome"]
     preco = float(input("Preço do produto: ") or 0) or itemParaEditar["preco"]
@@ -109,6 +107,10 @@ def alterar_item():
     }
 
     cardapio.append(produto)
+    print("Produto alterado com sucesso!")
+    print(
+        f"Nome: {nome}\nPreço: R$ {preco:.2f}\nCategoria: {categoria}\nSub-categoria: {sub_categoria}"
+    )
     print("-----------------------------------------")
 
 
@@ -263,14 +265,19 @@ def limpar_carrinho():
     carrinho.clear()
     print("Carrinho esvaziado com sucesso!")
 
+
 def remov_item_carrinho():
     for i, item in enumerate(CATEGORIAS):
-            print(f"{i} - {item}")
+        print(f"{i} - {item}")
 
-    while True: 
+    while True:
         Cat_Escolhida = []
-        Escolha = str(input("\nEscolha um número para selecionar a categoria do item a ser removido: "))
-        while True: 
+        Escolha = str(
+            input(
+                "\nEscolha um número para selecionar a categoria do item a ser removido: "
+            )
+        )
+        while True:
             if Escolha == "0":
                 Escolha = "bebidas"
                 break
@@ -285,27 +292,33 @@ def remov_item_carrinho():
                 break
             else:
                 break
-            
+
         for i, item in enumerate(carrinho):
             if Escolha in item.values():
                 Cat_Escolhida.append(i)
         if len(Cat_Escolhida) == 0:
-            print("\nA opção é inválida ou essa categoria ainda não foi adicionada ao carrinho. Escolha outra!")
+            print(
+                "\nA opção é inválida ou essa categoria ainda não foi adicionada ao carrinho. Escolha outra!"
+            )
         else:
             break
-   
+
     print("Carrinho")
     print(47 * "-")
-    
+
     for i, item in enumerate(carrinho):
         if Escolha in item.values():
             print(f"|{i} - {item['nome']} R${float(item['preco']):.2f}")
             Cat_Escolhida.append(str(i))
-    
+
     while True:
-        Escolha_remov = str(input("\nEscolha o indíce correspondente ao produto para removê-lo: "))
+        Escolha_remov = str(
+            input("\nEscolha o indíce correspondente ao produto para removê-lo: ")
+        )
         if Escolha_remov in Cat_Escolhida:
-            print(f'\nFoi removido o item ({carrinho[int(Escolha_remov)]["nome"]}) com preço (R${carrinho[int(Escolha_remov)]["preco"]:.2f})')
+            print(
+                f'\nFoi removido o item ({carrinho[int(Escolha_remov)]["nome"]}) com preço (R${carrinho[int(Escolha_remov)]["preco"]:.2f})'
+            )
             del carrinho[int(Escolha_remov)]
             break
         else:
@@ -313,7 +326,6 @@ def remov_item_carrinho():
 
         print(f"\nCarrinho Atualizado!")
         print(47 * "-")
-                
 
 
 print("-----------------------------------------")
@@ -334,7 +346,7 @@ print("-----------------------------------------")
 
 while True:
     escolha = int(input("Digite o número referente a função: "))
-    
+
     if escolha == 0:
         adicionar_item()
         break
