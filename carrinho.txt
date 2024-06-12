@@ -1,1 +1,1 @@
-[]
+[{"nome": "Mil Folhas", "preco": 18, "categoria": "sobremesas", "sub_categoria": "francesa"}]

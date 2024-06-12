@@ -263,6 +263,58 @@ def limpar_carrinho():
     carrinho.clear()
     print("Carrinho esvaziado com sucesso!")
 
+def remov_item_carrinho():
+    for i, item in enumerate(CATEGORIAS):
+            print(f"{i} - {item}")
+
+    while True: 
+        Cat_Escolhida = []
+        Escolha = str(input("\nEscolha um número para selecionar a categoria do item a ser removido: "))
+        while True: 
+            if Escolha == "0":
+                Escolha = "bebidas"
+                break
+            elif Escolha == "1":
+                Escolha = "entrada"
+                break
+            elif Escolha == "2":
+                Escolha = "pratos principais"
+                break
+            elif Escolha == "3":
+                Escolha = "sobremesas"
+                break
+            else:
+                break
+            
+        for i, item in enumerate(carrinho):
+            if Escolha in item.values():
+                Cat_Escolhida.append(i)
+        if len(Cat_Escolhida) == 0:
+            print("\nA opção é inválida ou essa categoria ainda não foi adicionada ao carrinho. Escolha outra!")
+        else:
+            break
+   
+    print("Carrinho")
+    print(47 * "-")
+    
+    for i, item in enumerate(carrinho):
+        if Escolha in item.values():
+            print(f"|{i} - {item['nome']} R${float(item['preco']):.2f}")
+            Cat_Escolhida.append(str(i))
+    
+    while True:
+        Escolha_remov = str(input("\nEscolha o indíce correspondente ao produto para removê-lo: "))
+        if Escolha_remov in Cat_Escolhida:
+            print(f'\nFoi removido o item ({carrinho[int(Escolha_remov)]["nome"]}) com preço (R${carrinho[int(Escolha_remov)]["preco"]:.2f})')
+            del carrinho[int(Escolha_remov)]
+            break
+        else:
+            print("\nInsira um número válido!")
+
+        print(f"\nCarrinho Atualizado!")
+        print(47 * "-")
+                
+
 
 print("-----------------------------------------")
 print(configuracoes["nome_da_cafeteria"])
@@ -276,14 +328,17 @@ print("3 - Buscar itens no cardápio")
 print("4 - Listar todos os itens do cardápio")
 print("5 - Adicionar produtos ao carrinho")
 print("6 - Mostrar carrinho")
-print("7 - Limpar o carrinho")
+print("7 - Remover item do carrinho")
+print("8 - Limpar o carrinho")
 print("-----------------------------------------")
 
 while True:
     escolha = int(input("Digite o número referente a função: "))
+    
     if escolha == 0:
         adicionar_item()
         break
+
     if escolha == 1:
         excluir()
         break
@@ -299,18 +354,25 @@ while True:
     if escolha == 4:
         listar_produtos()
         break
+
     if escolha == 5:
         add_carrinho()
         break
+
     if escolha == 6:
         mostrar_carrinho()
         break
+
     if escolha == 7:
+        remov_item_carrinho()
+        break
+
+    if escolha == 8:
         limpar_carrinho()
         break
+
     else:
         print("Escolha uma opção válida")
-    print("Escolha uma opção válida")
 
 
 # Guardar o cardapio atualizado no arquivo cardapio.txt
